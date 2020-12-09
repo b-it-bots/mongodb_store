@@ -58,9 +58,14 @@ if __name__ == '__main__':
         # get it back with a name
         print(msg_store.query_named("my favourite pose", Pose._type))
 
+        # delete a named pose
+        print(msg_store.delete_named("my favourite pose", Pose._type))
 
         # try to get it back with an incorrect name, so get None instead
         print(msg_store.query_named("my favourite position", Pose._type))
+
+        # try to delete a non-existing pose
+        print(msg_store.delete_named("my favourite position", Pose._type))
 
         # get all poses
         print(msg_store.query(Pose._type))
@@ -80,6 +85,3 @@ if __name__ == '__main__':
 
     except rospy.ServiceException as e:
         print("Service call failed: %s"%e)
-
-
-

@@ -177,6 +177,23 @@ class MessageStoreProxy:
 
         return self.update(message, meta_copy, {}, meta_query, upsert)
 
+    def delete_named(self, name, type):
+        """
+        Deletes a named message.
+        :Args:
+            | name (str): The name of the messages to delete.
+            | type (str): The type of the message.
+        :Returns:
+            | bool : True if the object was deleted successfully; False if there
+                     is an error or if the named object does not exist.
+        """
+        msg = self.query_named(name, type)
+        if not None in msg:
+            rospy.loginfo('[delete_named] deleting "%s"', name)
+            return self.delete(str(msg[1]['_id']))
+        rospy.loginfo('[delete_named] "%s" does not exist; ignoring request', name)
+        return False
+
     def update_id(self, id, message, meta = {}, upsert = False):
         """
         Updates a message by MongoDB ObjectId.
